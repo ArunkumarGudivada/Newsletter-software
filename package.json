@@ -1,0 +1,50 @@
+{
+  "name": "newsletter-builder",
+  "productName": "Newsletter Builder",
+  "version": "1.0.0",
+  "description": "A Figma-style spatial auto-layout newsletter design tool.",
+  "main": "main.js",
+  "author": "Newsletter Builder",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --win",
+    "pack": "electron-builder --win portable"
+  },
+  "devDependencies": {
+    "electron": "22.3.27",
+    "electron-builder": "24.13.3"
+  },
+  "build": {
+    "appId": "com.newsletterbuilder.app",
+    "productName": "Newsletter Builder",
+    "files": [
+      "main.js",
+      "index.html",
+      "script.js",
+      "styles.css",
+      "assets/**/*"
+    ],
+    "directories": {
+      "output": "release"
+    },
+    "win": {
+      "target": [
+        { "target": "nsis", "arch": ["x64"] },
+        { "target": "portable", "arch": ["x64"] }
+      ],
+      "icon": "assets/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Newsletter Builder"
+    },
+    "portable": {
+      "artifactName": "Newsletter Builder ${version} portable.exe"
+    }
+  }
+}

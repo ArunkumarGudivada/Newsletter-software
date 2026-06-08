@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Brain Do — Spatial Newsletter Studio</title>
+<title>Newsletter Builder</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -20,8 +20,8 @@
       <span class="logo" aria-hidden="true">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M3 7.5 12 12l9-4.5M3 16.5 12 21l9-4.5"/></svg>
       </span>
-      <span class="brand-name">Bristol&nbsp;Myers&nbsp;Squibb</span>
-      <span class="brand-sub">Newsletter</span>
+      <span class="brand-name">Newsletter</span>
+      <span class="brand-sub">Builder</span>
     </div>
 
     <!-- Tools -->
@@ -35,12 +35,48 @@
       <button class="tool" data-tool="text" title="Text (T)">
         <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V5h16v2M9 19h6M12 5v14"/></svg>
       </button>
-      <button class="tool" data-tool="rect" title="Rectangle (R)">
-        <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="5" width="16" height="14" rx="2"/></svg>
-      </button>
-      <button class="tool" data-tool="image" title="Image (I)">
-        <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.7"/><path d="m21 15-5-5L5 21"/></svg>
-      </button>
+      <div class="tool-wrap">
+        <button class="tool" data-tool="rect" title="Shapes (R)">
+          <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="5" width="16" height="14" rx="2"/></svg>
+        </button>
+        <div class="tool-menu shapes-menu" id="shapeToolMenu" hidden>
+          <button class="shape-item active" data-shape="rect" title="Rectangle">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="5" width="16" height="14" rx="2"/></svg>
+            <span>Rectangle</span>
+          </button>
+          <button class="shape-item" data-shape="ellipse" title="Ellipse / Circle">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/></svg>
+            <span>Ellipse</span>
+          </button>
+          <button class="shape-item" data-shape="triangle" title="Triangle">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 4 21 20H3z"/></svg>
+            <span>Triangle</span>
+          </button>
+          <button class="shape-item" data-shape="line" title="Line">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 12h16"/></svg>
+            <span>Line</span>
+          </button>
+          <button class="shape-item" data-shape="arrow" title="Arrow">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h14M13 6l6 6-6 6"/></svg>
+            <span>Arrow</span>
+          </button>
+        </div>
+      </div>
+      <div class="tool-wrap">
+        <button class="tool" data-tool="image" title="Image (I)">
+          <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.7"/><path d="m21 15-5-5L5 21"/></svg>
+        </button>
+        <div class="tool-menu" id="imageToolMenu" hidden>
+          <button class="tool-menu-item" id="imgImportItem">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5-5 5 5M12 5v12"/></svg>
+            <span><strong>Import from computer</strong><em>Pick a local image file</em></span>
+          </button>
+          <button class="tool-menu-item" id="imgDrawItem">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.7"/><path d="m21 15-5-5L5 21"/></svg>
+            <span><strong>Draw placeholder</strong><em>Drag on canvas to place</em></span>
+          </button>
+        </div>
+      </div>
       <button class="tool" data-tool="button" title="Button (B)">
         <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="8" width="18" height="8" rx="4"/></svg>
       </button>
@@ -57,12 +93,45 @@
     </div>
 
     <div class="tb-actions">
-      <button class="btn ghost" id="exportBtn" title="Export HTML">
-        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>
-        <span>Export</span>
+      <button class="btn ghost icon-only" id="undoBtn" title="Undo (Ctrl+Z)" disabled>
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14 4 9l5-5"/><path d="M4 9h11a5 5 0 0 1 5 5v0a5 5 0 0 1-5 5H9"/></svg>
       </button>
+      <button class="btn ghost icon-only" id="redoBtn" title="Redo (Ctrl+Shift+Z)" disabled>
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 14 5-5-5-5"/><path d="M20 9H9a5 5 0 0 0-5 5v0a5 5 0 0 0 5 5h6"/></svg>
+      </button>
+      <button class="btn ghost" id="openBtn" title="Open project (.bmsnews)">
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h5l2 2h9a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z"/></svg>
+        <span>Open</span>
+      </button>
+      <button class="btn ghost" id="saveBtn" title="Save project to your computer">
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><path d="M17 21v-8H7v8M7 3v5h8"/></svg>
+        <span>Save</span>
+      </button>
+      <div class="export-wrap">
+        <button class="btn ghost" id="exportBtn" title="Export…" aria-haspopup="true" aria-expanded="false">
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>
+          <span>Export</span>
+          <svg class="caret" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <div class="export-menu" id="exportMenu" role="menu" hidden>
+          <button class="export-item" id="exportImageBtn" role="menuitem">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.6-3.6a2 2 0 0 0-2.8 0L6 21"/></svg>
+            <span><strong>Image</strong><em>PNG of your newsletter</em></span>
+          </button>
+          <button class="export-item" id="exportHtmlBtn" role="menuitem">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m8 9-3 3 3 3"/><path d="m16 9 3 3-3 3"/><path d="m14 7-4 10"/></svg>
+            <span><strong>HTML code</strong><em>Standalone .html file</em></span>
+          </button>
+          <button class="export-item" id="exportEmailBtn" role="menuitem">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            <span><strong>Email message</strong><em>.eml for Outlook / mail</em></span>
+          </button>
+        </div>
+      </div>
       <button class="btn primary" id="previewBtn">Preview</button>
     </div>
+    <input type="file" id="openFile" accept=".bmsnews,application/json,.json" hidden />
+    <input type="file" id="imageFile" accept="image/*,.png,.jpg,.jpeg,.jfif,.svg,.gif,.webp,.bmp,.ico,.avif,.apng,.tif,.tiff" multiple hidden />
   </header>
 
   <!-- =================== WORKSPACE =================== -->
