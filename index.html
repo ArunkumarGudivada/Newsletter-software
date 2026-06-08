@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Brain Do — Spatial Newsletter Studio</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<div class="app">
+
+  <!-- =================== TOP TOOLBAR =================== -->
+  <header class="toolbar">
+    <div class="brand">
+      <span class="logo" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M3 7.5 12 12l9-4.5M3 16.5 12 21l9-4.5"/></svg>
+      </span>
+      <span class="brand-name">Bristol&nbsp;Myers&nbsp;Squibb</span>
+      <span class="brand-sub">Newsletter</span>
+    </div>
+
+    <!-- Tools -->
+    <div class="tools" id="tools" role="toolbar" aria-label="Tools">
+      <button class="tool active" data-tool="move" title="Move (V)">
+        <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 3 7.5 18 2.5-7 7-2.5L3 3z"/></svg>
+      </button>
+      <button class="tool" data-tool="frame" title="Frame (F)">
+        <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h16M4 16h16M8 4v16M16 4v16"/></svg>
+      </button>
+      <button class="tool" data-tool="text" title="Text (T)">
+        <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V5h16v2M9 19h6M12 5v14"/></svg>
+      </button>
+      <button class="tool" data-tool="rect" title="Rectangle (R)">
+        <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="5" width="16" height="14" rx="2"/></svg>
+      </button>
+      <button class="tool" data-tool="image" title="Image (I)">
+        <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.7"/><path d="m21 15-5-5L5 21"/></svg>
+      </button>
+      <button class="tool" data-tool="button" title="Button (B)">
+        <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="8" width="18" height="8" rx="4"/></svg>
+      </button>
+    </div>
+
+    <div class="spacer"></div>
+
+    <!-- Zoom -->
+    <div class="zoom-group">
+      <button class="zbtn" id="zoomOut" title="Zoom out">−</button>
+      <button class="zbtn zval" id="zoomVal" title="Reset zoom">100%</button>
+      <button class="zbtn" id="zoomIn" title="Zoom in">+</button>
+      <button class="zbtn" id="zoomFit" title="Zoom to fit">Fit</button>
+    </div>
+
+    <div class="tb-actions">
+      <button class="btn ghost" id="exportBtn" title="Export HTML">
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>
+        <span>Export</span>
+      </button>
+      <button class="btn primary" id="previewBtn">Preview</button>
+    </div>
+  </header>
+
+  <!-- =================== WORKSPACE =================== -->
+  <div class="workspace">
+
+    <!-- LEFT: LAYERS -->
+    <aside class="panel panel-left">
+      <div class="panel-head">
+        <span>Layers</span>
+        <button class="mini-add" id="addRootFrame" title="New frame">＋</button>
+      </div>
+      <div class="layers" id="layers"></div>
+    </aside>
+
+    <!-- CENTER: INFINITE CANVAS -->
+    <main class="viewport" id="viewport">
+      <div class="scene" id="scene"></div>
+      <!-- selection + handles overlay (screen space) -->
+      <div class="handles" id="handles"></div>
+      <!-- onboarding hint -->
+      <div class="hint" id="hint">
+        <div class="hint-card">
+          <strong>Spatial canvas</strong>
+          <p>Press <kbd>F</kbd> and drag to draw a frame · scroll to pan · <kbd>Ctrl</kbd>+scroll to zoom · <kbd>Space</kbd>+drag to grab</p>
+        </div>
+      </div>
+    </main>
+
+    <!-- RIGHT: INSPECTOR -->
+    <aside class="panel panel-right">
+      <div class="panel-head"><span id="inspTitle">Inspector</span></div>
+      <div class="inspector" id="inspector"></div>
+    </aside>
+  </div>
+</div>
+
+<!-- Preview modal -->
+<div class="modal-backdrop" id="previewModal">
+  <div class="modal">
+    <div class="modal-head">
+      <h2>Preview</h2>
+      <button class="iconbtn" id="closePreview" aria-label="Close">✕</button>
+    </div>
+    <div class="modal-body"><iframe id="previewFrame" title="Preview"></iframe></div>
+  </div>
+</div>
+
+<div class="toast-wrap" id="toastWrap"></div>
+
+<script type="module" src="script.js"></script>
+</body>
+</html>
